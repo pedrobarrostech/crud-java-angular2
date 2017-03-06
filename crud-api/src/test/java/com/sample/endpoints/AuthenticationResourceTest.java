@@ -36,7 +36,7 @@ public class AuthenticationResourceTest extends JerseyTest {
         enable(TestProperties.LOG_TRAFFIC);
         enable(TestProperties.DUMP_ENTITY);
         final Key key = MacProvider.generateKey();
-        User user = userDao.addUser(buildUser(2L, "bob", "bob@gmail.com", new String[]{"user"}, "aPassW0rd"));
+        User user = userDao.addUser(buildUser(2L, "bob", new String[]{"user"}, "aPassW0rd"));
         return new Application(userDao, key);
     }
 

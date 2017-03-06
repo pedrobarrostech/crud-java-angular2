@@ -82,7 +82,7 @@ public class UserDaoTest {
      */
     @Test
     public void testAddUser() throws Exception {
-        dao.addUser(buildUser("B", "B@gmail.com", new String[]{"B"}, "B"));
+        dao.addUser(buildUser("B", new String[]{"B"}, "B"));
     }
 
     /**
@@ -90,7 +90,7 @@ public class UserDaoTest {
      */
     @Test(expected = IllegalArgumentException.class)
     public void testAddUserTwice() throws Exception {
-        dao.addUser(buildUser("B", "B@gmail.com", new String[]{"B"}, "B"));
+        dao.addUser(buildUser("B", new String[]{"B"}, "B"));
     }
 
     /**
@@ -98,7 +98,7 @@ public class UserDaoTest {
      */
     @Test(expected = IllegalArgumentException.class)
     public void testUpdateWithMissingID() throws Exception {
-        User user = dao.addUser(buildUser("X", "XXXXXX@gmail.com", new String[]{"B"}, "B"));
+        User user = dao.addUser(buildUser("X", new String[]{"B"}, "B"));
         user.setId(null);
         dao.update(user);
     }
@@ -107,7 +107,7 @@ public class UserDaoTest {
      */
     @Test(expected = IllegalArgumentException.class)
     public void testUpdateWithMissingName() throws Exception {
-        User user = dao.addUser(buildUser("ZZ", "XXXXXX@gmail.com", new String[]{"B"}, "B"));
+        User user = dao.addUser(buildUser("ZZ", new String[]{"B"}, "B"));
         user.setUsername(null);
         dao.update(user);
     }

@@ -26,11 +26,11 @@ public class UserResourceTest extends JerseyTest {
 
     private static String AdminUserName = "bobMan";
     private static String AdminPassword = "aPassW0rd";
-    private static User AdminUser = buildUser(AdminUserName, "bob@gmail.com", new String[]{"user", "admin"}, AdminPassword);
+    private static User AdminUser = buildUser(AdminUserName, new String[]{"user", "admin"}, AdminPassword);
 
     private static String NormalUserName = "larry";
     private static String NormalPassword = "normalPassW0rd";
-    private static User NormalUser = buildUser(NormalUserName, "larry@gmail.com", new String[]{"user"}, NormalPassword);
+    private static User NormalUser = buildUser(NormalUserName, new String[]{"user"}, NormalPassword);
 
     private Token AdminToken;
     private Token NormalToken;
@@ -38,9 +38,8 @@ public class UserResourceTest extends JerseyTest {
     private static final UserDao userDao = new UserDao();
     private static final Key key = MacProvider.generateKey();
 
-    private static final User buildUser(String username, String email, String[] roles, String hashedPassword) {
+    private static final User buildUser(String username, String[] roles, String hashedPassword) {
         User user = new User();
-        user.setEmail(email);
         user.setUsername(username);
         user.setRoles(roles);
         user.setHashedPassword(hashedPassword);
@@ -82,18 +81,16 @@ public class UserResourceTest extends JerseyTest {
     @Test
     public void testAddUserAsAdmin() {
 
-        String email = "batman@gmail.com";
         String username = "BatMan";
         String[] roles = new String[]{"user"};
         String hashedPassword = "password";
 
-        User user = buildUser(username, email, roles, hashedPassword);
+        User user = buildUser(username, roles, hashedPassword);
         Entity<User> userEntity = Entity.entity(user, MediaType.APPLICATION_JSON_TYPE);
         Response response = target("users").request().header("Authorization", "Bearer " + AdminToken.getAuthToken()).post(userEntity);
         assertEquals(200, response.getStatus());
         User responseUser = response.readEntity(User.class);
 
-        assertEquals(email, responseUser.getEmail());
         assertEquals(username, responseUser.getUsername());
         assertArrayEquals(roles, responseUser.getRoles());
         assertEquals(hashedPassword, responseUser.getHashedPassword());
@@ -103,12 +100,11 @@ public class UserResourceTest extends JerseyTest {
     @Test
     public void testAddUserAsAdminButWithBadValues() {
 
-        String email = null;
         String username = null;
         String[] roles = new String[]{"user"};
         String hashedPassword = "password";
 
-        User user = buildUser(username, email, roles, hashedPassword);
+        User user = buildUser(username, roles, hashedPassword);
         Entity<User> userEntity = Entity.entity(user, MediaType.APPLICATION_JSON_TYPE);
         Response response = target("users").request().header("Authorization", "Bearer " + AdminToken.getAuthToken())
                 .accept(MediaType.APPLICATION_JSON_TYPE).post(userEntity);
@@ -124,11 +120,11 @@ public class UserResourceTest extends JerseyTest {
 
     @Test
     public void testAddUserAsUser() {
-        String email = "batman@gmail.com";
+        
         String username = "BatMan";
         String[] roles = new String[]{"user"};
         String hashedPassword = "password";
-        User user = buildUser(username, email, roles, hashedPassword);
+        User user = buildUser(username, roles, hashedPassword);
         Entity<User> userEntity = Entity.entity(user, MediaType.APPLICATION_JSON_TYPE);
         Response response = target("users").request().header("Authorization", "Bearer " + NormalToken.getAuthToken()).post(userEntity);
         assertEquals(400, response.getStatus());
@@ -180,8 +176,6 @@ public class UserResourceTest extends JerseyTest {
                 .accept(MediaType.APPLICATION_JSON_TYPE)
                 .get(User.class);
 
-        user.setEmail("MonkeyGuy@gmail.com");
-
         Entity<User> userEntity = Entity.entity(user, MediaType.APPLICATION_JSON_TYPE);
         Response response = target("users")
                 .path(String.valueOf(NormalUser.getId()))
@@ -194,7 +188,6 @@ public class UserResourceTest extends JerseyTest {
 
         assertEquals(200, response.getStatus());
 
-        assertEquals("MonkeyGuy@gmail.com", responseUser.getEmail());
         assertNotEquals(user.getVersion(), responseUser.getVersion());
 
     }
@@ -209,8 +202,6 @@ public class UserResourceTest extends JerseyTest {
                 .accept(MediaType.APPLICATION_JSON_TYPE)
                 .get(User.class);
 
-        user.setEmail("GoogleBoy@gmail.com");
-
         Entity<User> userEntity = Entity.entity(user, MediaType.APPLICATION_JSON_TYPE);
         Response response = target("users")
                 .path(String.valueOf(NormalUser.getId()))
@@ -223,7 +214,6 @@ public class UserResourceTest extends JerseyTest {
 
         assertEquals(200, response.getStatus());
 
-        assertEquals("GoogleBoy@gmail.com", responseUser.getEmail());
         assertNotEquals(user.getVersion(), responseUser.getVersion());
 
     }

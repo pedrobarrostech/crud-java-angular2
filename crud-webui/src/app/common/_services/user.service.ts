@@ -10,7 +10,7 @@ export class UserService {
   private token = 'Bearer ' + JSON.parse(localStorage.getItem('currentUser')).token;
   private headers = new Headers({
       'Accept': ' application/json',
-      'Content-Type': 'application/x-www-form-urlencoded',
+      'Content-Type': 'application/json',
       'Authorization': this.token
   });
   private options = new RequestOptions({ headers: this.headers });

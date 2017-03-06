@@ -1,0 +1,19 @@
+.ui-grid .ui-grid-row {
+    margin-top: 10px;
+}
+
+.data-container {
+    padding: 50px;
+}
+
+.active{
+    color: #fff;
+}
+
+.navbar-brand {
+    float:right;
+}
+
+.nav-item a{
+    color:#a3daff;
+}

@@ -22,12 +22,12 @@ public class AuthenticationResourceTest extends JerseyTest {
 
     private UserDao userDao;
 
-    private static User buildUser(Long id, String username, String[] roles, String hashedPassword) {
+    private static User buildUser(Long id, String username, String[] roles, String password) {
         User user = new User();
         user.setId(id);
         user.setUsername(username);
         user.setRoles(roles);
-        user.setHashedPassword(hashedPassword);
+        user.setPassword(password);
         return user;
     }
 

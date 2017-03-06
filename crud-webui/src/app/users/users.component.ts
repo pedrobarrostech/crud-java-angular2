@@ -80,6 +80,7 @@ export class UsersComponent implements OnInit {
     );
   }
 
+  /*
   deleteUser(user) {
     if(window.confirm("Are you sure you want to permanently delete this User?")) {
       this._userService.remove(user).subscribe(
@@ -92,6 +93,7 @@ export class UsersComponent implements OnInit {
       );
     }
   }
+  */
 
   sendInfoMsg(body, type, time = 3000) {
     this.infoMsg.body = body;

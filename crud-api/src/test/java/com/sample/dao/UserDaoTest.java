@@ -20,11 +20,11 @@ public class UserDaoTest {
     private static final UserDao dao = new UserDao();
     private static User user1, user2;
 
-    private static User buildUser( String username, String[] roles, String hashedPassword) {
+    private static User buildUser( String username, String[] roles, String password) {
         User user = new User();
         user.setUsername(username);
         user.setRoles(roles);
-        user.setHashedPassword(hashedPassword);
+        user.setPassword(password);
         return user;
     }
 

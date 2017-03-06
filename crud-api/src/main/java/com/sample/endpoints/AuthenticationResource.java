@@ -71,7 +71,7 @@ public class AuthenticationResource {
             logger.info("Invalid username '" + username + "' ");
             throw new NotAuthorizedException("Invalid username '" + username + "' ");
         }
-        if (user.getHashedPassword().equals(password)) {
+        if (user.getPassword().equals(password)) {
             logger.info("USER AUTHENTICATED");
         } else {
             logger.info("USER NOT AUTHENTICATED");

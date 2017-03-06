@@ -38,11 +38,11 @@ public class UserResourceTest extends JerseyTest {
     private static final UserDao userDao = new UserDao();
     private static final Key key = MacProvider.generateKey();
 
-    private static final User buildUser(String username, String[] roles, String hashedPassword) {
+    private static final User buildUser(String username, String[] roles, String password) {
         User user = new User();
         user.setUsername(username);
         user.setRoles(roles);
-        user.setHashedPassword(hashedPassword);
+        user.setPassword(password);
         return user;
     }
 
@@ -83,9 +83,9 @@ public class UserResourceTest extends JerseyTest {
 
         String username = "BatMan";
         String[] roles = new String[]{"user"};
-        String hashedPassword = "password";
+        String password = "password";
 
-        User user = buildUser(username, roles, hashedPassword);
+        User user = buildUser(username, roles, password);
         Entity<User> userEntity = Entity.entity(user, MediaType.APPLICATION_JSON_TYPE);
         Response response = target("users").request().header("Authorization", "Bearer " + AdminToken.getAuthToken()).post(userEntity);
         assertEquals(200, response.getStatus());
@@ -93,7 +93,7 @@ public class UserResourceTest extends JerseyTest {
 
         assertEquals(username, responseUser.getUsername());
         assertArrayEquals(roles, responseUser.getRoles());
-        assertEquals(hashedPassword, responseUser.getHashedPassword());
+        assertEquals(password, responseUser.getPassword());
         assertNotNull(responseUser.getId());
     }
 
@@ -102,9 +102,9 @@ public class UserResourceTest extends JerseyTest {
 
         String username = null;
         String[] roles = new String[]{"user"};
-        String hashedPassword = "password";
+        String password = "password";
 
-        User user = buildUser(username, roles, hashedPassword);
+        User user = buildUser(username, roles, password);
         Entity<User> userEntity = Entity.entity(user, MediaType.APPLICATION_JSON_TYPE);
         Response response = target("users").request().header("Authorization", "Bearer " + AdminToken.getAuthToken())
                 .accept(MediaType.APPLICATION_JSON_TYPE).post(userEntity);
@@ -123,8 +123,8 @@ public class UserResourceTest extends JerseyTest {
         
         String username = "BatMan";
         String[] roles = new String[]{"user"};
-        String hashedPassword = "password";
-        User user = buildUser(username, roles, hashedPassword);
+        String password = "password";
+        User user = buildUser(username, roles, password);
         Entity<User> userEntity = Entity.entity(user, MediaType.APPLICATION_JSON_TYPE);
         Response response = target("users").request().header("Authorization", "Bearer " + NormalToken.getAuthToken()).post(userEntity);
         assertEquals(400, response.getStatus());

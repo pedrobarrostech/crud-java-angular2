@@ -20,7 +20,7 @@ public class User implements Serializable {
     @NotEmpty
     private String username;
     private String[] roles;
-    private String hashedPassword;
+    private String password;
     private int version = 0;
 
     public User() {
@@ -50,12 +50,12 @@ public class User implements Serializable {
         this.roles = roles;
     }
 
-    public String getHashedPassword() {
-        return hashedPassword;
+    public String getPassword() {
+        return password;
     }
 
-    public void setHashedPassword(String hashedPassword) {
-        this.hashedPassword = hashedPassword;
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public int getVersion() {
@@ -77,7 +77,7 @@ public class User implements Serializable {
         if (id != null ? !id.equals(user.id) : user.id != null) return false;
         if (username != null ? !username.equals(user.username) : user.username != null) return false;
         if (!Arrays.equals(roles, user.roles)) return false;
-        return !(hashedPassword != null ? !hashedPassword.equals(user.hashedPassword) : user.hashedPassword != null);
+        return !(password != null ? !password.equals(user.password) : user.password != null);
 
     }
     
@@ -87,7 +87,7 @@ public class User implements Serializable {
                 "id=" + id +
                 ", username='" + username + '\'' +
                 ", roles=" + Arrays.toString(roles) +
-                ", hashedPassword='" + hashedPassword + '\'' +
+                ", password='" + password + '\'' +
                 ", version=" + version +
                 '}';
     }

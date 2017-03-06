@@ -82,18 +82,16 @@ public class UserResource {
 
         if (securityContext.isUserInRole("admin")) {
             User oldUser = dao.getUser(id);
-            oldUser.setHashedPassword(user.getHashedPassword());
+            oldUser.setPassword(user.getPassword());
             return dao.update(oldUser);
         } else {
             User oldUser = dao.getUser(id);
             if (oldUser.getUsername().equals(securityContext.getUserPrincipal().getName())) {
-                oldUser.setHashedPassword(user.getHashedPassword());
+                oldUser.setPassword(user.getPassword());
                 return dao.update(oldUser);
             } else {
                 throw new NotAllowedException("Not allowed ");
             }
         }
     }
-
-
 }

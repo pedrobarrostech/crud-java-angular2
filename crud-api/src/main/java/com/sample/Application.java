@@ -29,7 +29,7 @@ public class Application extends ResourceConfig {
         User user = new User();
         user.setUsername("ironman");
         user.setRoles(new String[]{"user", "admin"});
-        user.setHashedPassword("password");
+        user.setPassword("password");
         this.getUserDao().addUser(user);
     }
 
